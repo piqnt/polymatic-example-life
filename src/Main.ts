@@ -9,7 +9,7 @@ import { Editor } from "./Editor";
 
 export interface MainContext {
   stage?: Stage.Root;
-  grid: Cell[][];
+  grid?: Cell[][];
   paused?: boolean;
   columns?: number;
   rows?: number;
