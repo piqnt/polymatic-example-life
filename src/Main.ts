@@ -3,12 +3,13 @@ import * as Stage from "stage-js";
 import { Middleware } from "polymatic";
 import { FrameLoop } from "./FrameLoop";
 import { Loader } from "./Loader";
-import { Cell, GameOfLife } from "./GameOfLife";
+import { Cell, Simulation } from "./Simulation";
 import { Renderer } from "./Renderer";
+import { Editor } from "./Editor";
 
 export interface MainContext {
   stage?: Stage.Root;
-  cells?: Cell[];
+  grid: Cell[][];
   paused?: boolean;
   columns?: number;
   rows?: number;
@@ -19,7 +20,8 @@ export class Main extends Middleware<MainContext> {
     super();
     this.use(new FrameLoop());
     this.use(new Loader());
-    this.use(new GameOfLife());
+    this.use(new Simulation());
+    this.use(new Editor());
     this.use(new Renderer());
   }
 }

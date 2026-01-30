@@ -3,8 +3,11 @@ import * as Stage from "stage-js";
 import { Binder, Driver, Memo, Middleware } from "polymatic";
 
 import { type MainContext } from "./Main";
-import { type Cell } from "./GameOfLife";
+import { type Cell } from "./Simulation";
 
+/**
+ * Renderer middleware to visualize the simulation grid and handle user input.
+ */
 export class Renderer extends Middleware<MainContext> {
   board: Stage.Component;
   pointerDown = false;
@@ -36,37 +39,34 @@ export class Renderer extends Middleware<MainContext> {
   };
 
   handleFrameUpdate = () => {
-    this.binder.data(this.context.cells);
+    this.binder.data(this.context.grid ? this.context.grid.flat() : []);
   };
 
   handlePointerDown = (event: { x: number; y: number }) => {
-    this.context.paused = true;
     this.pointerDown = true;
 
-    this.toggleCellAt(event.x, event.y);
-  };
+    const i = Math.floor(event.x / 10);
+    const j = Math.floor(event.y / 10);
+    const cell = this.context.grid[j]?.[i];
 
-  handlePointerUp = () => {
-    this.pointerDown = false;
-    this.context.paused = false;
-  };
-
-  handlePointerMove = (event: { x: number; y: number }) => {
     if (this.pointerDown) {
-      this.toggleCellAt(event.x, event.y);
+      this.emit("cell-pointer-down", { cell });
     }
   };
 
-  toggleCellAt = (x: number, y: number) => {
-    const i = Math.floor(x / 10);
-    const j = Math.floor(y / 10);
+  handlePointerUp = () => {
+    if (this.pointerDown) {
+      this.pointerDown = false;
+      this.emit("cell-pointer-up");
+    }
+  };
 
-    if (i >= 0 && i < this.context.columns && j >= 0 && j < this.context.rows) {
-      // Find the cell at this position
-      const cell = this.context.cells.find((c) => c.i === i && c.j === j);
-      if (cell) {
-        this.emit("user-cell-toggle", cell);
-      }
+  handlePointerMove = (event: { x: number; y: number }) => {
+    const i = Math.floor(event.x / 10);
+    const j = Math.floor(event.y / 10);
+    const cell = this.context.grid[j]?.[i];
+    if (this.pointerDown) {
+      this.emit("cell-pointer-move", { cell });
     }
   };
 
