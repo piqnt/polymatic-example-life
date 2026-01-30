@@ -9,8 +9,6 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@types/d3-force": "^3.0.10",
-    "@types/lodash": "^4.17.15",
     "@types/node": "^22.10.7",
     "@typescript-eslint/eslint-plugin": "^8.20.0",
     "@typescript-eslint/parser": "^8.20.0",
@@ -22,7 +20,6 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
-    "d3-force": "^3.0.0",
     "nanoid": "^5.1.6",
     "polymatic": "^0.0.12",
     "stage-js": "^1.0.0-alpha.18"
