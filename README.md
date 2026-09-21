@@ -1,6 +1,6 @@
 # Game of Life - Polymatic Example
 
-Game of life simulation, implemented by Grok Code, using [Polymatic](https://github.com/piqnt/polymatic) framework, and rendered with [Stage.js](https://github.com/piqnt/stage.js).
+Game of life simulation, using [Polymatic](https://github.com/piqnt/polymatic) framework, and rendered with [Pixi.js](https://pixijs.com/).
 
 [Play Live Demo](https://piqnt.github.io/polymatic-example-life/)
 
